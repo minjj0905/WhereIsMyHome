@@ -113,7 +113,7 @@ const updateSearchResult = (aparts) => {
     pricetitle.className = 'text-indigo-800 font-medium mr-[10px]';
     priceP.appendChild(pricetitle);
     const pricespan = document.createElement('span');
-    pricespan.textContent = price + '원';
+    pricespan.textContent = price + '만원';
     priceP.appendChild(pricespan);
     cardbody.appendChild(priceP);
 
