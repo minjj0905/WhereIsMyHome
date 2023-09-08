@@ -62,7 +62,7 @@
           </details>
         </li>
       </ul>
-      <button onclick="loginModal.showModal()" class="btn btn-primary btn-sm">로그인</button>
+      <button id="loginBtn" onclick="loginModal.showModal()" class="btn btn-primary btn-sm">로그인</button>
 
       <!-- 로그인 모달 시작 -->
       <dialog id="loginModal" class="modal">
@@ -73,14 +73,16 @@
           <label class="label">
             <span class="label-text">아이디</span>
           </label>
-          <input type="text" placeholder="ID" maxlength="20" class="input input-bordered w-full max-w-md" />
+          <input type="text" id="loginid" placeholder="ID" maxlength="20"
+            class="input input-bordered w-full max-w-md" />
           <label class="label">
             <span class="label-text">비밀번호</span>
           </label>
-          <input type="password" placeholder="PW" maxlength="20" class="input input-bordered w-full max-w-md" />
+          <input type="password" id="loginpw" placeholder="PW" maxlength="20"
+            class="input input-bordered w-full max-w-md" />
           <div class="flex gap-[10px] p-4 pl-0 pb-0">
             <button class="btn w-1/2" onclick="moveSign()">회원가입</button>
-            <button class="btn btn-primary w-1/2">로그인</button>
+            <button class="btn btn-primary w-1/2" onclick="login()">로그인</button>
           </div>
         </div>
       </dialog>
@@ -88,194 +90,38 @@
 
     </nav>
   </header>
-  <section>
-    <div class="bg-black relative">
-      <img src="./imgs/banner.jpg" alt="" class="w-screen max-h-96 object-cover opacity-60">
-      <div
-        class="w-full flex flex-wrap gap-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 justify-center">
-        <select id="sido" class="select w-32">
-          <option disabled selected>시/도</option>
-        </select>
-        <select id="gugun" class="select w-32">
-          <option disabled selected>구/군</option>
-        </select>
-        <select id="dong" class="select w-32">
-          <option disabled selected>동</option>
-        </select>
-        <select id="year" class="select w-32">
-          <option disabled selected>ㅅ</option>
-        </select>
-        <select id="month" class="select w-32">
-          <option disabled selected>매매월</option>
-        </select>
-      </div>
-      <button id="search" onclick="search()"
-        class="bg-indigo-500 hover:bg-indigo-400 px-10 py-2 font-semibold text-white rounded-full absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2">검색하기</button>
-    </div>
-    </div>
-  </section>
-  <main class="pt-10 w-screen bg-neutral-50 flex flex-col justify-center">
-    <h1 class="font-bold text-primary text-center text-2xl">실거래가 정보</h1>
-    <section class="flex gap-[1rem] justify-center mt-[2.5rem] mb-[5rem]">
-      <div id="search-result" class="w-[30rem] h-[40rem] overflow-y-auto flex flex-col items-center gap-[1rem]">
-        <div class="card w-96 bg-base-100 shadow-sm" id="no-result">
-          <div class="card-body">
-            <h2 class="card-title justify-center">검색 결과가 없습니다.</h2>
-          </div>
-        </div>
-
-        <!-- 예시 카드뷰 -->
-        <!-- <div class="card w-96 bg-base-100 shadow-sm">
-          <div class="card-body">
-            <h2 class="card-title flex w-full justify-between cursor-pointer">
-              <div>
-                <span class="text-indigo-900">
-                  어쩌고 아파트
-                </span>
-                <span class="text-sm">8층</span>
-              </div>
-              <div class="badge badge-ghost font-normal">1111년 22월 33일</div>
-            </h2>
-            <p>
-              <span class="text-indigo-800 font-medium">거래금액</span>
-              <span>123,200만원</span>
-            </p>
-            <p>
-              <span class="text-indigo-800 font-medium">전용면적</span>
-              <span>34.34평</span>
-            </p>
-          </div>
-        </div> -->
-
-      </div>
-      <div id="map" class="w-[50rem] h-[40rem]"></div>
+  <main class="pt-10 w-full h-full w-screen py-[5rem] bg-neutral-50 flex flex-col items-center">
+    <section class="w-[30rem] mt-[3rem]">
+      <label class="label">
+        <span class="label-text">아이디</span>
+      </label>
+      <input type="text" id="upid" placeholder="아이디" maxlength="20" class="input input-bordered w-full max-w-xl" />
+      <label class="label">
+        <span class="label-text">비밀번호</span>
+      </label>
+      <input type="password" id="uppw" placeholder="비밀번호" maxlength="20" class="input input-bordered w-full max-w-xl" />
+      <label class="label">
+        <span class="label-text">비밀번호 확인</span>
+      </label>
+      <input type="password" id="uppwck" placeholder="비밀번호 확인" class="input input-bordered w-full max-w-xl" />
+      <label class="label">
+        <span class="label-text">주소</span>
+      </label>
+      <input type="text" id="upaddress" placeholder="주소 입력" maxlength="20"
+        class="input input-bordered w-full max-w-xl" />
+      <label class="label">
+        <span class="label-text">전화번호</span>
+      </label>
+      <input type="number" id="upphone" placeholder="- 제외 입력" maxlength="14"
+        class="input input-bordered w-full max-w-xl" />
+      <button class="btn w-full btn-primary mt-[3rem]" onclick="signup()">회원가입</button>
     </section>
+
   </main>
   <footer class="bg-slate-200 w-screen min-h-[5rem] h-[5rem] flex justify-center items-center">
     <span class="text-xs text-slate-500">Copyright © SAFFY 14반 권순준 김민정</span>
   </footer>
 
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5460c565ce28365d60584e53309d69dd"></script>
-  <script src="./map.js"></script>
-  <script>
-    ///////////////////////// select box 설정 (지역, 매매기간) /////////////////////////
-    let date = new Date();
-
-    let yearEl = document.querySelector("#year");
-    let yearOpt = `<option disabled selected value="">매매년도</option>`;
-    let year = date.getFullYear();
-    for (let i = year; i > year - 20; i--) {
-      yearOpt += `<option value="${i}">${i}년</option>`;
-    }
-    yearEl.innerHTML = yearOpt;
-
-    // 브라우저가 열리면 시도정보 얻기.
-    sendRequest("sido", "*00000000");
-
-    document.querySelector("#year").addEventListener("change", function () {
-      let month = date.getMonth() + 1;
-      let monthEl = document.querySelector("#month");
-      let monthOpt = `<option disabled selected value="">매매월</option>`;
-      let yearSel = document.querySelector("#year");
-      let m = yearSel[yearSel.selectedIndex].value == date.getFullYear() ? month : 13;
-      for (let i = 1; i < m; i++) {
-        monthOpt += `<option value="${i < 10 ? "0" + i : i}">${i}월</option>`;
-      }
-      monthEl.innerHTML = monthOpt;
-    });
-
-    // https://juso.dev/docs/reg-code-api/
-    // let url = "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes";
-    // let regcode = "*00000000";
-    // 전국 특별/광역시, 도
-    // https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes?regcode_pattern=*00000000
-
-    // 시도가 바뀌면 구군정보 얻기.
-    document.querySelector("#sido").addEventListener("change", function () {
-      if (this[this.selectedIndex].value) {
-        let regcode = this[this.selectedIndex].value.substr(0, 2) + "*00000";
-        sendRequest("gugun", regcode);
-      } else {
-        initOption("gugun");
-        initOption("dong");
-      }
-    });
-
-    // 구군이 바뀌면 동정보 얻기.
-    document.querySelector("#gugun").addEventListener("change", function () {
-      if (this[this.selectedIndex].value) {
-        let regcode = this[this.selectedIndex].value.substr(0, 5) + "*";
-        sendRequest("dong", regcode);
-      } else {
-        initOption("dong");
-      }
-    });
-
-    function sendRequest(selid, regcode) {
-      const url = "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes";
-      let params = "regcode_pattern=" + regcode + "&is_ignore_zero=true";
-      fetch(`${url}?${params}`)
-        .then((response) => response.json())
-        .then((data) => addOption(selid, data));
-    }
-
-    function addOption(selid, data) {
-      let opt = ``;
-      initOption(selid);
-      switch (selid) {
-        case "sido":
-          opt += `<option disabled selected value="">시/도</option>`;
-          data.regcodes.forEach(function (regcode) {
-            opt += `
-                  <option value="${regcode.code}">${regcode.name}</option>
-                  `;
-          });
-          break;
-        case "gugun":
-          opt += `<option disabled selected value="">구/군</option>`;
-          for (let i = 0; i < data.regcodes.length; i++) {
-            if (i != data.regcodes.length - 1) {
-              if (
-                data.regcodes[i].name.split(" ")[1] == data.regcodes[i + 1].name.split(" ")[1] &&
-                data.regcodes[i].name.split(" ").length !=
-                data.regcodes[i + 1].name.split(" ").length
-              ) {
-                data.regcodes.splice(i, 1);
-                i--;
-              }
-            }
-          }
-          let name = "";
-          data.regcodes.forEach(function (regcode) {
-            if (regcode.name.split(" ").length == 2) name = regcode.name.split(" ")[1];
-            else name = regcode.name.split(" ")[1] + " " + regcode.name.split(" ")[2];
-            opt += `
-                  <option value="${regcode.code}">${name}</option>
-                  `;
-          });
-          break;
-        case "dong":
-          opt += `<option disabled selected value="">동</option>`;
-          let idx = 2;
-          data.regcodes.forEach(function (regcode) {
-            if (regcode.name.split(" ").length != 3) idx = 3;
-            opt += `
-                  <option value="${regcode.code}">${regcode.name.split(" ")[idx]}</option>
-                  `;
-          });
-      }
-      document.querySelector(`#${selid}`).innerHTML = opt;
-    }
-
-    function initOption(selid) {
-      let options = document.querySelector(`#${selid}`);
-      options.length = 0;
-      // let len = options.length;
-      // for (let i = len - 1; i >= 0; i--) {
-      //   options.remove(i);
-      // }
-    }
-  </script>
 </body>
 
 </html>

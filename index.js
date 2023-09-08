@@ -2,6 +2,42 @@ const moveSign = () => {
   window.location.href = '/signin.html';
 };
 
+const login = () => {
+  const id = document.getElementById('loginid').value;
+  const pw = document.getElementById('loginpw').value;
+
+  const user = { id, pw, pwcheck: null, address: null, phone: null };
+  localStorage.setItem('user', JSON.stringify(user));
+  window.location.reload();
+};
+
+const signup = () => {
+  const id = document.getElementById('upid').value;
+  const pw = document.getElementById('uppw').value;
+  const pwcheck = document.getElementById('uppwck').value;
+  const address = document.getElementById('upaddress').value;
+  const phone = document.getElementById('upphone').value;
+
+  const user = { id, pw, pwcheck, address, phone };
+
+  localStorage.setItem('user', JSON.stringify(user));
+  window.location.href = '/index.html';
+};
+
+const checkLogin = () => {
+  if (!localStorage.getItem('user')) return;
+
+  document.getElementById('loginBtn').innerHTML = '로그아웃';
+  document.getElementById('loginBtn').onclick = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+};
+
+window.onload = function () {
+  checkLogin();
+};
+
 const search = () => {
   const pageNo = 1;
   const numOfRows = 10;

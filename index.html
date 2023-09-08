@@ -62,7 +62,7 @@
           </details>
         </li>
       </ul>
-      <button onclick="loginModal.showModal()" class="btn btn-primary btn-sm">로그인</button>
+      <button id="loginBtn" onclick="loginModal.showModal()" class="btn btn-primary btn-sm">로그인</button>
 
       <!-- 로그인 모달 시작 -->
       <dialog id="loginModal" class="modal">
@@ -73,14 +73,16 @@
           <label class="label">
             <span class="label-text">아이디</span>
           </label>
-          <input type="text" placeholder="ID" maxlength="20" class="input input-bordered w-full max-w-md" />
+          <input type="text" id="loginid" placeholder="ID" maxlength="20"
+            class="input input-bordered w-full max-w-md" />
           <label class="label">
             <span class="label-text">비밀번호</span>
           </label>
-          <input type="password" placeholder="PW" maxlength="20" class="input input-bordered w-full max-w-md" />
+          <input type="password" id="loginpw" placeholder="PW" maxlength="20"
+            class="input input-bordered w-full max-w-md" />
           <div class="flex gap-[10px] p-4 pl-0 pb-0">
             <button class="btn w-1/2" onclick="moveSign()">회원가입</button>
-            <button class="btn btn-primary w-1/2">로그인</button>
+            <button class="btn btn-primary w-1/2" onclick="login()">로그인</button>
           </div>
         </div>
       </dialog>
