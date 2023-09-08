@@ -26,12 +26,20 @@ const signup = () => {
 
 const checkLogin = () => {
   if (!localStorage.getItem('user')) return;
-
-  document.getElementById('loginBtn').innerHTML = '로그아웃';
-  document.getElementById('loginBtn').onclick = () => {
+  const loginBtn = document.getElementById('loginBtn');
+  loginBtn.innerHTML = '로그아웃';
+  loginBtn.onclick = () => {
     localStorage.removeItem('user');
     window.location.reload();
   };
+  const parent = loginBtn.parentNode;
+  const updateBtn = document.createElement('button');
+  updateBtn.textContent = '정보수정';
+  updateBtn.onclick = () => {
+    window.location.href = '/updateUser.html';
+  };
+  updateBtn.className = 'btn btn-sm mr-2';
+  parent.insertBefore(updateBtn, loginBtn);
 };
 
 window.onload = function () {
@@ -65,11 +73,66 @@ const search = () => {
     .then((xml) => {
       const aparts = xmlToJson(xml)?.response?.body?.items.item;
       updateSearchResult(aparts);
+      setMarker(aparts);
     });
 };
 
+// 지도관련
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+  mapOption = {
+    center: new kakao.maps.LatLng(37.501307715371695, 127.03961032986173), // 지도의 중심좌표
+    level: 3, // 지도의 확대 레벨
+  };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+var geocoder = new kakao.maps.services.Geocoder();
+
+const setMarker = (aparts) => {
+  for (key in aparts) {
+    const item = aparts[key];
+
+    const address = `${item['도로명']['#text']} ${item['도로명건물본번호코드']['#text']}`;
+
+    geocoder.addressSearch(address, function (result, status) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords,
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          content: `<div style="width:150px;text-align:center;padding:6px 0;">${item['아파트']['#text']}</div>`,
+        });
+        infowindow.open(map, marker);
+      }
+    });
+  }
+};
+
+// // 마커가 표시될 위치입니다
+// var markerPosition = new kakao.maps.LatLng(
+//   37.501307715371695,
+//   127.03961032986173
+// );
+
+// // 마커를 생성합니다
+// var marker = new kakao.maps.Marker({
+//   position: markerPosition,
+// });
+
+// marker.setMap(map);
+// 지도 끝
+
 const updateSearchResult = (aparts) => {
   document.getElementById('no-result').style.display = 'none';
+  document.getElementById('search-result').innerHTML = '';
 
   for (key in aparts) {
     const item = aparts[key];
@@ -94,6 +157,22 @@ const updateSearchResult = (aparts) => {
     const apartname = document.createElement('span');
     apartname.className = 'text-indigo-900 mr-[6px]';
     apartname.textContent = name;
+
+    const address = `${item['도로명']['#text']} ${item['도로명건물본번호코드']['#text']}`;
+
+    geocoder.addressSearch(address, function (result, status) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        apartname.id = `${result[0].y} ${result[0].x}`;
+      }
+    });
+
+    apartname.onclick = () => {
+      const coord = apartname.id.split(' ');
+      const moveLocation = new kakao.maps.LatLng(coord[0], coord[1]);
+      map.panTo(moveLocation);
+    };
+
     const floorspan = document.createElement('span');
     floorspan.className = 'text-sm';
     floorspan.textContent = `${floor}층`;

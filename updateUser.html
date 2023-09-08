@@ -102,10 +102,6 @@
       </label>
       <input type="password" id="uppw" placeholder="비밀번호" maxlength="20" class="input input-bordered w-full max-w-xl" />
       <label class="label">
-        <span class="label-text">비밀번호 확인</span>
-      </label>
-      <input type="password" id="uppwck" placeholder="비밀번호 확인" class="input input-bordered w-full max-w-xl" />
-      <label class="label">
         <span class="label-text">주소</span>
       </label>
       <input type="text" id="upaddress" placeholder="주소 입력" maxlength="20"
@@ -115,7 +111,8 @@
       </label>
       <input type="number" id="upphone" placeholder="- 제외 입력" maxlength="14"
         class="input input-bordered w-full max-w-xl" />
-      <button class="btn w-full btn-primary mt-[3rem]" onclick="signup()">회원가입</button>
+      <button class="btn w-full btn-primary mt-[3rem]" onclick="updateUser()">정보 수정</button>
+      <span class="text-slate-500 cursor-pointer text-sm" onclick="deleteUser()">회원 탈퇴</span>
     </section>
 
   </main>
@@ -123,6 +120,7 @@
     <span class="text-xs text-slate-500">Copyright © SAFFY 14반 권순준 김민정</span>
   </footer>
   <script src="index.js"></script>
+  <script src="update.js"></script>
 </body>
 
 </html>
